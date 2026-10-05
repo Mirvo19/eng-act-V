@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Merchant of Venice: Act V</title>
+<style>
+:root{--bg:#fff;--fg:#111;--mute:#555;--rule:#bbb}
+@media (prefers-color-scheme:dark){:root{--bg:#111;--fg:#f2f2f2;--mute:#aaa;--rule:#555}}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--fg);font-family:Georgia,"Times New Roman",serif}
+.s{position:absolute;inset:0;display:none;grid-template-columns:1.1fr .9fr;gap:clamp(16px,3vw,48px);align-items:center;padding:calc(clamp(16px,4vh,44px) + env(safe-area-inset-top,0px)) clamp(20px,6vw,90px) calc(clamp(60px,10vh,90px) + env(safe-area-inset-bottom,0px));overflow:hidden}
+.s.on{display:grid}
+.s.rv{grid-template-columns:.9fr 1.1fr}.s.rv .vis{order:-1}
+.h{font-size:clamp(1.8rem,4vw,3.6rem);line-height:1.1;padding-bottom:.3em;margin-bottom:.7em;border-bottom:2px solid var(--fg);view-transition-name:ttl}
+.tx{max-height:100%;overflow:auto}
+ul{list-style:none}
+li{font-size:clamp(1rem,1.65vw,1.6rem);line-height:1.45;margin:.65em 0;padding-left:1.4em;position:relative}
+li::before{content:"";position:absolute;left:0;top:.55em;width:.7em;height:2px;background:var(--fg)}
+.vis{display:grid;place-items:center;height:100%;max-height:72vh;min-height:0;border:1px solid var(--rule)}
+.vis svg{width:min(100%,60vh);max-height:100%;animation:fy 5s ease-in-out infinite alternate;view-transition-name:icon}
+.d{fill:none;stroke:var(--fg);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1}
+.nd{fill:var(--bg)}
+.on .d{animation:dr 1.6s calc(var(--i,0)*.12s) ease-out forwards}
+.nt,.el{font-family:Georgia,serif;text-anchor:middle}
+.nt{fill:var(--fg);font-size:15px;font-weight:700}.el{fill:var(--mute);font-size:14px}
+.ft{opacity:0}.on .ft{animation:fi .8s 1.3s forwards}
+.r{opacity:0;transform:translateY(24px)}
+.on .r{animation:up .6s calc(.15s + var(--i,0)*.11s) forwards}
+.cv .kick{color:var(--mute);letter-spacing:.3em;text-transform:uppercase;font-size:clamp(.9rem,1.5vw,1.5rem)}
+.cv h1{font-size:clamp(2.4rem,6.2vw,6rem);line-height:1.02;margin:.25em 0;view-transition-name:ttl}
+.cv .meta{font-size:clamp(1.05rem,1.9vw,1.9rem);color:var(--mute);margin-bottom:1.2em}
+.cv small{display:block;font-size:clamp(.9rem,1.4vw,1.4rem);color:var(--mute)}
+.mem{display:flex;gap:.6em;flex-wrap:wrap;margin-top:.6em}
+.mem span{padding:.45em 1em;border:1px solid var(--fg);font-size:clamp(1rem,1.5vw,1.5rem)}
+.q blockquote{font-style:italic;font-size:clamp(1.5rem,3vw,3rem);line-height:1.25;margin:.3em 0;padding-left:.7em;border-left:4px solid var(--fg)}
+.q cite{display:block;color:var(--mute);font-size:clamp(1rem,1.6vw,1.6rem);font-style:normal;margin:.4em 0 1em .9em}
+.q p{font-size:clamp(1rem,1.6vw,1.6rem);line-height:1.5}
+.tl{grid-template-columns:1fr;grid-template-rows:auto 1fr;align-content:stretch}
+.tlw{position:relative;min-height:0}
+.ln{position:absolute;left:0;right:0;top:1.6rem;height:3px;background:var(--fg);transform-origin:left;transform:scaleX(0)}
+.on .ln{animation:ln 1.6s .2s forwards}
+.g{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.6vw,22px);height:100%;min-height:0}
+.k{border:1px solid var(--rule);background:var(--bg);padding:clamp(12px,1.6vw,24px);padding-top:4.4rem;display:flex;flex-direction:column;gap:.45em;position:relative}
+.k b{font-size:clamp(1.1rem,1.9vw,1.9rem)}
+.k span{font-size:clamp(.95rem,1.4vw,1.4rem);line-height:1.4;color:var(--mute)}
+.n{position:absolute;top:0;left:1rem;width:3.2rem;height:3.2rem;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:1.3rem;font-style:normal}
+#nv{position:fixed;right:clamp(12px,2vw,28px);bottom:calc(clamp(10px,2vh,24px) + env(safe-area-inset-bottom,0px));display:flex;gap:10px;align-items:center;z-index:9;font-size:clamp(1rem,1.4vw,1.4rem);color:var(--mute)}
+#nv button{width:2.4em;height:2.4em;border-radius:50%;border:1px solid var(--fg);background:var(--bg);color:var(--fg);cursor:pointer}
+#nv button:hover{background:var(--fg);color:var(--bg)}
+#pg{position:fixed;left:0;top:0;right:0;height:4px;background:var(--rule);z-index:9}
+#pg i{display:block;height:100%;background:var(--fg);transform-origin:left;transition:transform .5s}
+::view-transition-group(*){animation-duration:.7s}
+.nvt .s.on{animation:sl .6s both}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes up{to{opacity:1;transform:none}}
+@keyframes fi{to{opacity:1}}
+@keyframes ln{to{transform:scaleX(1)}}
+@keyframes fy{to{transform:translateY(-12px)}}
+@keyframes sl{from{opacity:0;transform:translateX(40px)}}
+@media(max-aspect-ratio:1/1){.s,.s.rv{grid-template-columns:1fr;grid-template-rows:auto 30vh;align-content:center}.s.rv .vis{order:0}.g{grid-template-columns:repeat(2,1fr)}.vis svg{height:100%}}
+@media(prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}.d{stroke-dashoffset:0}.r,.ft{opacity:1;transform:none}.ln{transform:none}}
+@media print{@page{size:landscape;margin:0}html,body{overflow:visible;height:auto}.s{display:grid!important;position:relative;inset:auto;width:100vw;height:100vh;break-after:page}#nv,#pg{display:none!important}*{animation:none!important}.d{stroke-dashoffset:0}.r,.ft{opacity:1;transform:none}.ln{transform:none}}
+</style></head>
+<body>
+<div id="pg"><i></i></div>
+<main id="deck"></main>
+<nav id="nv"><button id="pv" aria-label="Previous">&#8249;</button><span id="ct"></span><button id="nx" aria-label="Next">&#8250;</button></nav>
+<script>
+const I={
+moon:["M130 40A70 70 0 1 0 160 130A56 56 0 0 1 130 40Z","M40 50v14M33 57h14","M165 40v12M159 46h12","M150 160v10M145 165h10"],
+notes:["M80 60V150","M140 50V140","M80 60L140 50","M64 150a16 12 0 1 0 32 0a16 12 0 1 0-32 0","M124 140a16 12 0 1 0 32 0a16 12 0 1 0-32 0"],
+candle:["M84 100H116V170H84Z","M100 40Q124 74 100 96Q76 74 100 40Z","M66 170H134","M100 96V100","M62 70L44 60","M138 70L156 60","M58 100H40","M142 100H160"],
+rings:["M42 110a36 36 0 1 0 72 0a36 36 0 1 0-72 0","M86 110a36 36 0 1 0 72 0a36 36 0 1 0-72 0","M78 54L92 68L78 82L64 68Z"],
+arch:["M28 172V84Q100-14 172 84V172","M60 172V98Q100 40 140 98V172","M16 172H184","M100 172V120"]};
+const svg=k=>`<svg viewBox="0 0 200 200" aria-hidden="true">${I[k].map((d,j)=>`<path class="d" pathLength="1" style="--i:${j}" d="${d}"/>`).join("")}</svg>`;
+const rel=()=>{const N={Lorenzo:[110,70],Jessica:[310,70],Portia:[110,200],Bassanio:[310,200],Antonio:[500,200],Nerissa:[110,330],Gratiano:[310,330]};
+const E=[["Lorenzo","Jessica","deed of gift"],["Portia","Bassanio","ring"],["Bassanio","Antonio","bond"],["Nerissa","Gratiano","ring"],["Portia","Nerissa","doctor and clerk"]];
+return`<svg viewBox="0 0 600 400">${E.map(([a,b,t],j)=>{const p=N[a],q=N[b],v=p[0]==q[0];return`<path class="d" pathLength="1" style="--i:${j}" d="M${p[0]} ${p[1]}L${q[0]} ${q[1]}"/><text class="el ft" x="${v?p[0]+(t.length>10?50:30):(p[0]+q[0])/2}" y="${v?(p[1]+q[1])/2+5:p[1]-48}" ${v?'text-anchor="start"':''}>${t}</text>`}).join("")}${Object.entries(N).map(([n,c],j)=>`<circle class="d nd" pathLength="1" style="--i:${j+3}" cx="${c[0]}" cy="${c[1]}" r="38"/><text class="nt ft" x="${c[0]}" y="${c[1]+5}">${n}</text>`).join("")}</svg>`};
+const S=[
+{l:"cv"},
+{t:"Setting and Characters",i:"rel",b:["Act V is one scene, set at night in the avenue to Portia's house in Belmont.","Present: Lorenzo, Jessica, Stephano, Launcelot, Portia, Nerissa, Bassanio, Antonio and Gratiano.","Portia and Nerissa have just come back from Venice, where they played the doctor and the clerk.","The mood shifts from the courtroom's tension to moonlight, music and comedy."]},
+{t:"Moonlight and Music",i:"notes",b:["Lorenzo and Jessica trade lines beginning \"In such a night\", recalling Troilus, Thisbe, Dido and Medea.","Stephano brings word that Portia will arrive before dawn, and Launcelot says Bassanio will be there by morning.","Lorenzo asks for music and speaks of the harmony of the heavens that we cannot hear.","He says a man with no music in him is fit for treasons and should not be trusted."]},
+{l:"q",i:"candle",t:"Quotation: Portia on the Candle",q:"So shines a good deed in a naughty world.",a:"Portia, Act 5, Scene 1",e:"Portia sees a small light burning in her hall and notes how far it throws its beams. She adds that things sound sweeter in their right season, and that a greater glory dims a lesser one, as the moon hides the candle."},
+{t:"The Ring Quarrel",i:"rings",b:["Bassanio, Antonio and Gratiano arrive, and Gratiano quarrels with Nerissa about her ring.","Nerissa reminds him he swore to wear it until death. Gratiano says he gave it to a boy, the judge's clerk.","Portia scolds Gratiano, then asks Bassanio about his ring, and he admits it is gone.","Both women refuse to share a bed with their husbands until they see the rings.","Bassanio explains he gave his ring to the doctor who saved Antonio's life."]},
+{l:"tl",t:"Revelations",k:[["Antonio's pledge","He offers his soul as surety that Bassanio will keep faith, and Portia gives him a ring to hand over."],["The ring returns","Bassanio sees it is the same ring he gave the doctor. Portia says she had it from him."],["Disguise revealed","Portia was the doctor and Nerissa the clerk, as Bellario's letter confirms."],["Good news","Three of Antonio's ships have come safely to harbour. Lorenzo and Jessica receive Shylock's deed of gift."]]},
+{t:"Resolution and Themes",i:"arch",b:["Rings stand for vows, and keeping faith is what the quarrel tests.","Disguise has let Portia see the truth about her husband's promise.","Music and moonlight stand for harmony restored at Belmont.","Portia suggests they go in and answer questions until dawn. Gratiano ends the play joking that he will fear nothing so much as keeping Nerissa's ring safe."]}
+];
+const deck=document.getElementById("deck");
+S.forEach((s,k)=>{const e=document.createElement("section");e.className="s "+(s.l||"sp")+(!s.l&&k%2?" rv":"");
+const v=s.l==="cv"?svg("moon"):s.i==="rel"?rel():s.i?svg(s.i):"";let h="";
+if(s.l==="cv")h=`<div class="tx"><p class="kick r">A play by William Shakespeare</p><h1>The Merchant of Venice</h1><p class="meta r">Act V, Scene 1 &middot; Belmont</p><small class="r">Presented by</small><div class="mem"><span class="r">Samir Ghimire</span><span class="r">Rhythm Adhikari</span><span class="r">Niaz Shrestha</span></div></div><div class="vis">${v}</div>`;
+else if(s.l==="tl")h=`<h2 class="h">${s.t}</h2><div class="tlw"><i class="ln"></i><div class="g">${s.k.map((c,j)=>`<div class="k r"><em class="n">${j+1}</em><b>${c[0]}</b><span>${c[1]}</span></div>`).join("")}</div></div>`;
+else if(s.l==="q")h=`<div class="tx"><h2 class="h">${s.t}</h2><blockquote class="r">&ldquo;${s.q}&rdquo;</blockquote><cite class="r">${s.a}</cite><p class="r">${s.e}</p></div><div class="vis">${v}</div>`;
+else h=`<div class="tx"><h2 class="h">${s.t}</h2><ul>${s.b.map(b=>`<li class="r">${b}</li>`).join("")}</ul></div><div class="vis">${v}</div>`;
+e.innerHTML=h;e.querySelectorAll(".r").forEach((x,j)=>x.style.setProperty("--i",j));deck.appendChild(e)});
+const sl=[...document.querySelectorAll(".s")],ct=document.getElementById("ct"),pg=document.querySelector("#pg i");
+const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;let cur=0;
+if(!document.startViewTransition)document.documentElement.classList.add("nvt");
+function show(n){sl.forEach((e,i)=>e.classList.toggle("on",i===n));ct.textContent=`${n+1} / ${S.length}`;pg.style.transform=`scaleX(${(n+1)/S.length})`}
+function go(n){n=Math.max(0,Math.min(S.length-1,n));if(n===cur&&sl[n].classList.contains("on"))return;cur=n;
+if(document.startViewTransition&&!rm)document.startViewTransition(()=>show(n));else show(n)}
+document.getElementById("pv").onclick=()=>go(cur-1);document.getElementById("nx").onclick=()=>go(cur+1);
+addEventListener("keydown",e=>{const k=e.key;
+if(["ArrowRight","ArrowDown"," ","PageDown"].includes(k)){e.preventDefault();go(cur+1)}
+else if(["ArrowLeft","ArrowUp","PageUp"].includes(k)){e.preventDefault();go(cur-1)}
+else if(k==="Home")go(0);else if(k==="End")go(S.length-1);
+else if(k==="f"||k==="F"){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+let x0=null;addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});
+addEventListener("touchend",e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(cur+(d<0?1:-1));x0=null});
+show(0);
+</script>
+</body></html>
