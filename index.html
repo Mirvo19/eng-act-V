@@ -5,26 +5,43 @@
 <style>
 :root{--bg:#fff;--fg:#111;--mute:#555;--rule:#bbb}
 @media (prefers-color-scheme:dark){:root{--bg:#111;--fg:#f2f2f2;--mute:#aaa;--rule:#555}}
+:root[data-theme="light"]{--bg:#fff;--fg:#111;--mute:#555;--rule:#bbb}
+:root[data-theme="dark"]{--bg:#111;--fg:#f2f2f2;--mute:#aaa;--rule:#555}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--fg);font-family:Georgia,"Times New Roman",serif}
 .s{position:absolute;inset:0;display:none;grid-template-columns:1.1fr .9fr;gap:clamp(16px,3vw,48px);align-items:center;padding:calc(clamp(16px,4vh,44px) + env(safe-area-inset-top,0px)) clamp(20px,6vw,90px) calc(clamp(60px,10vh,90px) + env(safe-area-inset-bottom,0px));overflow:hidden}
 .s.on{display:grid}
 .s.rv{grid-template-columns:.9fr 1.1fr}.s.rv .vis{order:-1}
-.h{font-size:clamp(1.8rem,4vw,3.6rem);line-height:1.1;padding-bottom:.3em;margin-bottom:.7em;border-bottom:2px solid var(--fg);view-transition-name:ttl}
+.h{position:relative;font-size:clamp(1.8rem,4vw,3.6rem);line-height:1.1;padding-bottom:.3em;margin-bottom:.7em;view-transition-name:ttl}
+.h::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--fg);transform:scaleX(0);transform-origin:left}
+.on .h::after{animation:ln 1s .1s cubic-bezier(.7,0,.2,1) forwards}
 .tx{max-height:100%;overflow:auto}
 ul{list-style:none}
 li{font-size:clamp(1rem,1.65vw,1.6rem);line-height:1.45;margin:.65em 0;padding-left:1.4em;position:relative}
-li::before{content:"";position:absolute;left:0;top:.55em;width:.7em;height:2px;background:var(--fg)}
-.vis{display:grid;place-items:center;height:100%;max-height:72vh;min-height:0;border:1px solid var(--rule)}
-.vis svg{width:min(100%,60vh);max-height:100%;animation:fy 5s ease-in-out infinite alternate;view-transition-name:icon}
+li::before{content:"";position:absolute;left:0;top:.55em;width:.7em;height:2px;background:var(--fg);transform:scaleX(0);transform-origin:left}
+.on li::before{animation:ln .5s calc(.35s + var(--i,0)*.11s) forwards}
+.vis{display:grid;place-items:center;height:100%;max-height:72vh;min-height:0;border:1px solid var(--rule);overflow:hidden}
+.vis svg{width:min(100%,60vh);max-height:100%;view-transition-name:icon;overflow:visible}
 .d{fill:none;stroke:var(--fg);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1}
+.d.hd{fill:var(--fg);fill-opacity:0}
 .nd{fill:var(--bg)}
-.on .d{animation:dr 1.6s calc(var(--i,0)*.12s) ease-out forwards}
+.on .d{animation:dr 1.6s calc(var(--i,0)*.12s) cubic-bezier(.6,0,.3,1) forwards}
+.on .d.hd{animation:dr 1.6s calc(var(--i,0)*.12s) cubic-bezier(.6,0,.3,1) forwards,fo .6s calc(1s + var(--i,0)*.1s) forwards}
 .nt,.el{font-family:Georgia,serif;text-anchor:middle}
 .nt{fill:var(--fg);font-size:15px;font-weight:700}.el{fill:var(--mute);font-size:14px}
 .ft{opacity:0}.on .ft{animation:fi .8s 1.3s forwards}
+.fw{fill:none;stroke:var(--mute);stroke-width:2;stroke-dasharray:3 9;opacity:0}
+.on .fw{animation:fi .6s 1.8s forwards,mh 1s linear infinite}
+.gl{fill:var(--fg);opacity:.07;transform-box:fill-box;transform-origin:center;animation:pu 4s ease-in-out infinite}
+.tw{fill:var(--fg);opacity:0;transform-box:fill-box;transform-origin:center;animation:tw 2.6s calc(var(--t,0)*.55s) ease-in-out infinite}
+.fl{fill:var(--fg);font-family:Georgia,serif;font-size:20px;opacity:0;transform-box:fill-box;animation:rise 3.6s calc(var(--t,0)*.9s) ease-in infinite}
+.bob{animation:bob 3s ease-in-out infinite alternate}
+.rot{transform-origin:100px 70px;animation:rt 24s linear infinite}
+.sw{transform-origin:100px 58px;animation:sw 3.2s ease-in-out infinite alternate}
+.ra{animation:ra 3.2s 1.8s ease-in-out infinite alternate}.rb{animation:rb 3.2s 1.8s ease-in-out infinite alternate}
+.mn{fill:var(--fg);opacity:.9;animation:mr 6s ease-in-out infinite alternate}
 .r{opacity:0;transform:translateY(24px)}
-.on .r{animation:up .6s calc(.15s + var(--i,0)*.11s) forwards}
+.on .r{animation:up .6s calc(.15s + var(--i,0)*.11s) cubic-bezier(.2,.8,.2,1) forwards}
 .cv .kick{color:var(--mute);letter-spacing:.3em;text-transform:uppercase;font-size:clamp(.9rem,1.5vw,1.5rem)}
 .cv h1{font-size:clamp(2.4rem,6.2vw,6rem);line-height:1.02;margin:.25em 0;view-transition-name:ttl}
 .cv .meta{font-size:clamp(1.05rem,1.9vw,1.9rem);color:var(--mute);margin-bottom:1.2em}
@@ -37,44 +54,79 @@ li::before{content:"";position:absolute;left:0;top:.55em;width:.7em;height:2px;b
 .tl{grid-template-columns:1fr;grid-template-rows:auto 1fr;align-content:stretch}
 .tlw{position:relative;min-height:0}
 .ln{position:absolute;left:0;right:0;top:1.6rem;height:3px;background:var(--fg);transform-origin:left;transform:scaleX(0)}
-.on .ln{animation:ln 1.6s .2s forwards}
+.on .ln{animation:ln 1.6s .2s cubic-bezier(.7,0,.2,1) forwards}
 .g{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.6vw,22px);height:100%;min-height:0}
 .k{border:1px solid var(--rule);background:var(--bg);padding:clamp(12px,1.6vw,24px);padding-top:4.4rem;display:flex;flex-direction:column;gap:.45em;position:relative}
 .k b{font-size:clamp(1.1rem,1.9vw,1.9rem)}
 .k span{font-size:clamp(.95rem,1.4vw,1.4rem);line-height:1.4;color:var(--mute)}
-.n{position:absolute;top:0;left:1rem;width:3.2rem;height:3.2rem;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:1.3rem;font-style:normal}
+.n{position:absolute;top:0;left:1rem;width:3.2rem;height:3.2rem;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:1.3rem;font-style:normal;transform:scale(0)}
+.on .n{animation:pop .5s calc(.5s + var(--i,0)*.25s) cubic-bezier(.3,1.6,.5,1) forwards}
 #nv{position:fixed;right:clamp(12px,2vw,28px);bottom:calc(clamp(10px,2vh,24px) + env(safe-area-inset-bottom,0px));display:flex;gap:10px;align-items:center;z-index:9;font-size:clamp(1rem,1.4vw,1.4rem);color:var(--mute)}
 #nv button{width:2.4em;height:2.4em;border-radius:50%;border:1px solid var(--fg);background:var(--bg);color:var(--fg);cursor:pointer}
 #nv button:hover{background:var(--fg);color:var(--bg)}
 #pg{position:fixed;left:0;top:0;right:0;height:4px;background:var(--rule);z-index:9}
-#pg i{display:block;height:100%;background:var(--fg);transform-origin:left;transition:transform .5s}
-::view-transition-group(*){animation-duration:.7s}
+#pg i{display:block;height:100%;background:var(--fg);transform-origin:left;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+::view-transition-group(*){animation-duration:.8s;animation-timing-function:cubic-bezier(.7,0,.2,1)}
+::view-transition-old(icon){animation:.4s ease both vo}
+::view-transition-new(icon){animation:.6s .2s ease both vi}
 .nvt .s.on{animation:sl .6s both}
 @keyframes dr{to{stroke-dashoffset:0}}
 @keyframes up{to{opacity:1;transform:none}}
 @keyframes fi{to{opacity:1}}
+@keyframes fo{to{fill-opacity:1}}
 @keyframes ln{to{transform:scaleX(1)}}
-@keyframes fy{to{transform:translateY(-12px)}}
+@keyframes pop{to{transform:scale(1)}}
+@keyframes mh{to{stroke-dashoffset:-24}}
+@keyframes pu{50%{transform:scale(1.3);opacity:.14}}
+@keyframes tw{0%,100%{opacity:.1;transform:scale(.4) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(45deg)}}
+@keyframes rise{0%{opacity:0;transform:translateY(12px)}25%{opacity:.8}100%{opacity:0;transform:translateY(-56px) rotate(14deg)}}
+@keyframes bob{to{transform:translateY(-7px)}}
+@keyframes rt{to{transform:rotate(360deg)}}
+@keyframes sw{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+@keyframes ra{from{transform:translateX(-14px)}to{transform:translateX(6px)}}
+@keyframes rb{from{transform:translateX(14px)}to{transform:translateX(-6px)}}
+@keyframes mr{from{transform:translateY(30px);opacity:.3}to{transform:translateY(0);opacity:.95}}
+@keyframes vo{to{opacity:0;transform:scale(.7) rotate(-8deg)}}
+@keyframes vi{from{opacity:0;transform:scale(.7) rotate(8deg)}}
 @keyframes sl{from{opacity:0;transform:translateX(40px)}}
 @media(max-aspect-ratio:1/1){.s,.s.rv{grid-template-columns:1fr;grid-template-rows:auto 30vh;align-content:center}.s.rv .vis{order:0}.g{grid-template-columns:repeat(2,1fr)}.vis svg{height:100%}}
-@media(prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}.d{stroke-dashoffset:0}.r,.ft{opacity:1;transform:none}.ln{transform:none}}
-@media print{@page{size:landscape;margin:0}html,body{overflow:visible;height:auto}.s{display:grid!important;position:relative;inset:auto;width:100vw;height:100vh;break-after:page}#nv,#pg{display:none!important}*{animation:none!important}.d{stroke-dashoffset:0}.r,.ft{opacity:1;transform:none}.ln{transform:none}}
+@media(prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}.d{stroke-dashoffset:0}.d.hd{fill-opacity:1}.r,.ft,.fw{opacity:1;transform:none}.tw{opacity:.7}.ln,.h::after,li::before,.n{transform:none}}
+@media print{@page{size:landscape;margin:0}html,body{overflow:visible;height:auto}.s{display:grid!important;position:relative;inset:auto;width:100vw;height:100vh;break-after:page}#nv,#pg{display:none!important}*{animation:none!important}.d{stroke-dashoffset:0}.d.hd{fill-opacity:1}.r,.ft,.fw{opacity:1;transform:none}.tw{opacity:.7}.ln,.h::after,li::before,.n{transform:none}}
 </style></head>
 <body>
 <div id="pg"><i></i></div>
 <main id="deck"></main>
 <nav id="nv"><button id="pv" aria-label="Previous">&#8249;</button><span id="ct"></span><button id="nx" aria-label="Next">&#8250;</button></nav>
 <script>
+let n=0;
+const p=(d,c="",x="")=>`<path class="d ${c}" pathLength="1" style="--i:${n++}" d="${d}">${x}</path>`;
+const am=(v,t)=>`<animate attributeName="d" dur="${t}s" repeatCount="indefinite" values="${v.join(";")}"/>`;
+const sp=(x,y,s,t)=>`<path class="tw" style="--t:${t}" d="M${x} ${y-s}L${x+s*.25} ${y-s*.25}L${x+s} ${y}L${x+s*.25} ${y+s*.25}L${x} ${y+s}L${x-s*.25} ${y+s*.25}L${x-s} ${y}L${x-s*.25} ${y-s*.25}Z"/>`;
+const nt=(x,y,t)=>`<text class="fl" style="--t:${t}" x="${x}" y="${y}">&#9834;</text>`;
+const eh=(cx,cy)=>`M${cx-16} ${cy}a16 12 0 1 0 32 0a16 12 0 1 0 -32 0`;
 const I={
-moon:["M130 40A70 70 0 1 0 160 130A56 56 0 0 1 130 40Z","M40 50v14M33 57h14","M165 40v12M159 46h12","M150 160v10M145 165h10"],
-notes:["M80 60V150","M140 50V140","M80 60L140 50","M64 150a16 12 0 1 0 32 0a16 12 0 1 0-32 0","M124 140a16 12 0 1 0 32 0a16 12 0 1 0-32 0"],
-candle:["M84 100H116V170H84Z","M100 40Q124 74 100 96Q76 74 100 40Z","M66 170H134","M100 96V100","M62 70L44 60","M138 70L156 60","M58 100H40","M142 100H160"],
-rings:["M42 110a36 36 0 1 0 72 0a36 36 0 1 0-72 0","M86 110a36 36 0 1 0 72 0a36 36 0 1 0-72 0","M78 54L92 68L78 82L64 68Z"],
-arch:["M28 172V84Q100-14 172 84V172","M60 172V98Q100 40 140 98V172","M16 172H184","M100 172V120"]};
-const svg=k=>`<svg viewBox="0 0 200 200" aria-hidden="true">${I[k].map((d,j)=>`<path class="d" pathLength="1" style="--i:${j}" d="${d}"/>`).join("")}</svg>`;
+moon:()=>`<circle class="gl" cx="105" cy="90" r="78"/>`+
+ p("M130 40A70 70 0 1 0 160 130A56 56 0 0 1 130 40Z","",am(["M130 40A70 70 0 1 0 160 130A56 56 0 0 1 130 40Z","M130 40A70 70 0 1 0 160 130A92 92 0 0 1 130 40Z","M130 40A70 70 0 1 0 160 130A56 56 0 0 1 130 40Z"],9))+
+ p("M30 168H170")+p("M50 180H150")+p("M72 192H128")+
+ sp(40,48,9,0)+sp(168,34,7,1)+sp(26,104,6,2)+sp(176,104,5,3)+sp(150,160,5,4),
+notes:()=>[60,74,88,102,116].map(y=>p(`M20 ${y}H180`)).join("")+
+ `<g class="bob">`+p(eh(70,116),"hd")+p("M86 116V50")+p(eh(130,102),"hd")+p("M146 102V40")+p("M86 50L146 40")+p("M86 62L146 52")+`</g>`+
+ nt(30,150,0)+nt(105,160,1)+nt(165,150,2)+nt(60,185,3)+nt(140,185,4),
+candle:()=>`<circle class="gl" cx="100" cy="70" r="48"/><g class="rot">`+
+ Array.from({length:10},(_,i)=>{const a=i*Math.PI/5,c=Math.cos(a),s=Math.sin(a);return p(`M${100+c*58} ${70+s*58}L${100+c*70} ${70+s*70}`)}).join("")+`</g>`+
+ p("M82 104H118V172H82Z")+p("M62 172H138")+p("M100 96V104")+p("M118 118Q124 130 118 138")+
+ p("M100 38Q126 72 100 94Q74 72 100 38Z","hd",am(["M100 38Q126 72 100 94Q74 72 100 38Z","M106 32Q130 70 100 94Q70 76 98 40Z","M96 36Q122 76 100 94Q78 68 106 34Z","M100 38Q126 72 100 94Q74 72 100 38Z"],2.4))+
+ p("M100 66Q110 80 100 90Q90 80 100 66Z","",am(["M100 66Q110 80 100 90Q90 80 100 66Z","M102 62Q112 78 100 90Q92 80 98 64Z","M100 66Q110 80 100 90Q90 80 100 66Z"],1.6)),
+rings:()=>`<g class="ra">`+p("M34 110a38 38 0 1 0 76 0a38 38 0 1 0 -76 0")+`</g><g class="rb">`+p("M90 110a38 38 0 1 0 76 0a38 38 0 1 0 -76 0")+p("M128 38L142 52L128 66L114 52Z","hd")+`</g>`+
+ sp(152,32,9,0)+sp(40,52,6,2)+sp(172,150,6,3)+sp(100,176,5,1),
+arch:()=>`<circle class="gl" cx="100" cy="100" r="60"/>`+p("M30 176V90Q100-10 170 90V176")+p("M58 176V100Q100 30 142 100V176")+p("M16 176H184")+p("M30 188H170")+p("M92 24H108L104 38H96Z")+
+ `<clipPath id="ac"><path d="M58 176V100Q100 30 142 100V176Z"/></clipPath><g clip-path="url(#ac)"><circle class="mn" cx="100" cy="112" r="15"/></g>`+
+ `<g class="sw">`+p("M100 56V70")+p("M91 70H109L106 92H94Z")+`</g>`+sp(18,40,6,0)+sp(184,52,7,2)+sp(186,130,5,1)
+};
+const svg=k=>{n=0;return`<svg viewBox="0 0 200 200" aria-hidden="true">${I[k]()}</svg>`};
 const rel=()=>{const N={Lorenzo:[110,70],Jessica:[310,70],Portia:[110,200],Bassanio:[310,200],Antonio:[500,200],Nerissa:[110,330],Gratiano:[310,330]};
 const E=[["Lorenzo","Jessica","deed of gift"],["Portia","Bassanio","ring"],["Bassanio","Antonio","bond"],["Nerissa","Gratiano","ring"],["Portia","Nerissa","doctor and clerk"]];
-return`<svg viewBox="0 0 600 400">${E.map(([a,b,t],j)=>{const p=N[a],q=N[b],v=p[0]==q[0];return`<path class="d" pathLength="1" style="--i:${j}" d="M${p[0]} ${p[1]}L${q[0]} ${q[1]}"/><text class="el ft" x="${v?p[0]+(t.length>10?50:30):(p[0]+q[0])/2}" y="${v?(p[1]+q[1])/2+5:p[1]-48}" ${v?'text-anchor="start"':''}>${t}</text>`}).join("")}${Object.entries(N).map(([n,c],j)=>`<circle class="d nd" pathLength="1" style="--i:${j+3}" cx="${c[0]}" cy="${c[1]}" r="38"/><text class="nt ft" x="${c[0]}" y="${c[1]+5}">${n}</text>`).join("")}</svg>`};
+return`<svg viewBox="0 0 600 400">${E.map(([a,b,t],j)=>{const p=N[a],q=N[b],v=p[0]==q[0],L=`M${p[0]} ${p[1]}L${q[0]} ${q[1]}`;return`<path class="d" pathLength="1" style="--i:${j}" d="${L}"/><path class="fw" d="${L}"/><text class="el ft" x="${v?p[0]+(t.length>10?50:30):(p[0]+q[0])/2}" y="${v?(p[1]+q[1])/2+5:p[1]-48}" ${v?'text-anchor="start"':''}>${t}</text>`}).join("")}${Object.entries(N).map(([n,c],j)=>`<circle class="d nd" pathLength="1" style="--i:${j+3}" cx="${c[0]}" cy="${c[1]}" r="38"/><text class="nt ft" x="${c[0]}" y="${c[1]+5}">${n}</text>`).join("")}</svg>`};
 const S=[
 {l:"cv"},
 {t:"Setting and Characters",i:"rel",b:["Act V is one scene, set at night in the avenue to Portia's house in Belmont.","Present: Lorenzo, Jessica, Stephano, Launcelot, Portia, Nerissa, Bassanio, Antonio and Gratiano.","Portia and Nerissa have just come back from Venice, where they played the doctor and the clerk.","The mood shifts from the courtroom's tension to moonlight, music and comedy."]},
@@ -88,7 +140,7 @@ const deck=document.getElementById("deck");
 S.forEach((s,k)=>{const e=document.createElement("section");e.className="s "+(s.l||"sp")+(!s.l&&k%2?" rv":"");
 const v=s.l==="cv"?svg("moon"):s.i==="rel"?rel():s.i?svg(s.i):"";let h="";
 if(s.l==="cv")h=`<div class="tx"><p class="kick r">A play by William Shakespeare</p><h1>The Merchant of Venice</h1><p class="meta r">Act V, Scene 1 &middot; Belmont</p><small class="r">Presented by</small><div class="mem"><span class="r">Samir Ghimire</span><span class="r">Rhythm Adhikari</span><span class="r">Niaz Shrestha</span></div></div><div class="vis">${v}</div>`;
-else if(s.l==="tl")h=`<h2 class="h">${s.t}</h2><div class="tlw"><i class="ln"></i><div class="g">${s.k.map((c,j)=>`<div class="k r"><em class="n">${j+1}</em><b>${c[0]}</b><span>${c[1]}</span></div>`).join("")}</div></div>`;
+else if(s.l==="tl")h=`<h2 class="h">${s.t}</h2><div class="tlw"><i class="ln"></i><div class="g">${s.k.map((c,j)=>`<div class="k r"><em class="n" style="--i:${j}">${j+1}</em><b>${c[0]}</b><span>${c[1]}</span></div>`).join("")}</div></div>`;
 else if(s.l==="q")h=`<div class="tx"><h2 class="h">${s.t}</h2><blockquote class="r">&ldquo;${s.q}&rdquo;</blockquote><cite class="r">${s.a}</cite><p class="r">${s.e}</p></div><div class="vis">${v}</div>`;
 else h=`<div class="tx"><h2 class="h">${s.t}</h2><ul>${s.b.map(b=>`<li class="r">${b}</li>`).join("")}</ul></div><div class="vis">${v}</div>`;
 e.innerHTML=h;e.querySelectorAll(".r").forEach((x,j)=>x.style.setProperty("--i",j));deck.appendChild(e)});
